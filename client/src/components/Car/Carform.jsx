@@ -14,8 +14,8 @@ const Carform = ({ onAddCar }) => {
         modelName: '',
         year: '',
         listPrice: '',
-        availableColors: [],
         mileage: '',
+        availableColors: [],
         powerBHP: '',
         maxSpeed: '',
         imageUrl: ''
@@ -67,7 +67,7 @@ const Carform = ({ onAddCar }) => {
                     <FormLabel>Image URL</FormLabel>
                     <Input
                         type="text"
-                        name="imageUrl" // Use a unique name for this input field
+                        name="imageUrl" 
                         value={formData.imageUrl}
                         onChange={handleInputChange}
                     />

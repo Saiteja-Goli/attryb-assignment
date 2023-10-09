@@ -5,7 +5,7 @@ import CarsDetails from './Car/CarsDetails';
 
 const Dashboard = () => {
     const [showCarForm, setShowCarForm] = useState(false);
-    const [priceSortOrder, setPriceSortOrder] = useState(''); // Default sort order is ascending
+    const [priceSortOrder, setPriceSortOrder] = useState('');
     const [mileageSortOrder, setMileageSortOrder] = useState('');
 
     // Adding Car Details

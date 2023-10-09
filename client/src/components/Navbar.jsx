@@ -4,9 +4,9 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const Navbar = () => {
   const navbarStyles = {
-    position: 'fixed', // Fixed position
-    width: '100%', // Take up the full width of the viewport
-    zIndex: 1000, // Adjust the z-index to control stacking order
+    position: 'fixed',
+    width: '100%', 
+    zIndex: 1000, 
     backgroundColor: 'grey',
     py: 3,
     px: 6,
