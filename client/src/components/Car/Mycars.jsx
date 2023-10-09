@@ -1,10 +1,14 @@
 import { Box, Button, Center, Heading, Image, ListItem, UnorderedList, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import EditCarForm from './EditCarForm'
 
 const token = JSON.parse(localStorage.getItem('car-token'))
 const Mycars = () => {
     const toast = useToast()
     const [myCars, setMyCars] = useState([])
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [editingCar, setEditingCar] = useState(null);
+
     useEffect(() => {
         fetch("http://localhost:8000/inventory/get", {
             headers: {
@@ -46,6 +50,37 @@ const Mycars = () => {
             .catch((error) => {
                 console.error('Error deleting car:', error);
             });
+    };
+    //Edit Operation
+    const handleEditClick = (car, index) => {
+        setEditingCar(car);
+        setIsEditModalOpen(true);
+    };
+    const handleEditSave = async (editedCarData) => {
+        try {
+            const response = await fetch(`http://localhost:8000/inventory/edit/${editedCarData._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(editedCarData),
+            });
+
+            if (response.ok) {
+                const updatedCar = await response.json();
+                setIsEditModalOpen(false);
+                setMyCars((prevCarDetails) =>
+                    prevCarDetails.map((car) =>
+                        car._id === updatedCar._id ? updatedCar : car
+                    )
+                );
+            } else {
+                console.error('Error updating car:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error updating car:', error);
+        }
     };
     return (
         <div>
@@ -89,7 +124,7 @@ const Mycars = () => {
                                 </UnorderedList>
                             </Center>
                             <Center>
-                                <Button mt='10px' mr='5px' colorScheme={'whatsapp'}>Edit</Button>
+                                <Button mt='10px' mr='5px' onClick={() => handleEditClick(car, index)} colorScheme={'whatsapp'}>Edit</Button>
                                 <Button mt='10px' ml='5px' colorScheme={'red'}
                                     onClick={() => handleDeleteClick(car._id)}>Delete</Button>
                             </Center>
@@ -98,6 +133,15 @@ const Mycars = () => {
                     )
                         : (<Heading> Please Add Cars</Heading>)
                 }
+                {/* Edit Car Modal */}
+                {editingCar && (
+                    <EditCarForm
+                        carData={editingCar}
+                        isOpen={isEditModalOpen}
+                        onClose={() => setIsEditModalOpen(false)}
+                        onSave={handleEditSave}
+                    />
+                )}
             </Box>
         </div>
     )

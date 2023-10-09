@@ -1,98 +1,39 @@
-import React, { useState } from "react";
-import {
-    Box,
-    Heading,
-    FormControl,
-    FormLabel,
-    Input,
-    Checkbox,
-    Button,
-    Center,
-    useToast,
-} from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom"
-const InventoryForm = () => {
-
-    const toast = useToast();
-    const navigate = useNavigate()
-    const [formData, setFormData] = useState({
-        carImage: "",
-        carTitle: "",
-        kilometersOnOdometer: "",
-        majorScratches: false,
-        originalPaint: false,
-        accidentsReported: "",
-        previousBuyers: "",
-        registrationPlace: "",
-    });
+import React, { useState, useEffect } from 'react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, FormControl, Input, FormLabel, Checkbox, useToast } from '@chakra-ui/react';
+const EditCarForm = ({ carData, isOpen, onClose, onSave }) => {
+    const [editedCarData, setEditedCarData] = useState(carData);
+    const toast = useToast()
+    useEffect(() => {
+        setEditedCarData(carData);
+    }, [carData]);
 
     const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        const inputValue = type === "checkbox" ? checked : value;
-        setFormData({ ...formData, [name]: inputValue });
+        const { name, value } = e.target;
+        setEditedCarData({
+            ...editedCarData,
+            [name]: value,
+        });
     };
-    const token = JSON.parse(localStorage.getItem("car-token"));
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch("http://localhost:8000/inventory/post", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(formData),
-            });
+    const token = localStorage.getItem('car-token');
 
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log(responseData);
+    const handleSubmit = async () => {
+        onSave(editedCarData);
+        toast({
+            title: 'Success.',
+            description: "Updated Successfully",
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+        })
+    }
 
-                toast({
-                    title: "Inventory Added Successfully",
-                    description: "Inventory data has been added.",
-                    status: "success",
-                    duration: 5000,
-                    isClosable: true,
-                });
-                setFormData({
-                    carImage: "",
-                    carTitle: "",
-                    kilometersOnOdometer: "",
-                    majorScratches: false,
-                    originalPaint: false,
-                    accidentsReported: "",
-                    previousBuyers: "",
-                    registrationPlace: "",
-                });
-                window.location.reload();
-                toast({
-                    title: "Inventory Added Successfully",
-                    description: "Inventory data has been added.",
-                    status: "success",
-                    duration: 5000,
-                    isClosable: true,
-                });
-            }
-        } catch (error) {
-            console.error(error);
-            toast({
-                title: "Error",
-                description: "Failed to add inventory data. Please try again.",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-            });
-        }
-    };
 
     return (
-        <Center h="100vh">
-            <Box p={4} borderWidth="1px" borderRadius="lg" shadow="lg" width="400px">
-                <Heading as="h2" size="lg" mb={4}>
-                    Add Inventory Data
-                </Heading>
-                <form onSubmit={handleSubmit}>
+        <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Edit Car</ModalHeader>
+                <ModalBody>
                     <FormControl>
                         <FormLabel htmlFor="carImage">
                             carImage
@@ -101,7 +42,7 @@ const InventoryForm = () => {
                             name="carImage"
                             id="carImage"
                             placeholder="Image of Car"
-                            value={formData.carImage}
+                            value={editedCarData.carImage}
                             onChange={handleInputChange}
                             required
                         />
@@ -114,7 +55,7 @@ const InventoryForm = () => {
                             name="carTitle"
                             id="carTitle"
                             placeholder="Company Name"
-                            value={formData.carTitle}
+                            value={editedCarData.carTitle}
                             onChange={handleInputChange}
                             required
                         />
@@ -128,7 +69,7 @@ const InventoryForm = () => {
                             name="kilometersOnOdometer"
                             id="kilometersOnOdometer"
                             placeholder="Kilometers on Odometer"
-                            value={formData.kilometersOnOdometer}
+                            value={editedCarData.kilometersOnOdometer}
                             onChange={handleInputChange}
                             required
                         />
@@ -138,7 +79,7 @@ const InventoryForm = () => {
                         <Checkbox
                             name="majorScratches"
                             id="majorScratches"
-                            isChecked={formData.majorScratches}
+                            isChecked={editedCarData.majorScratches}
                             onChange={handleInputChange}
                         />
                     </FormControl>
@@ -147,7 +88,7 @@ const InventoryForm = () => {
                         <Checkbox
                             name="originalPaint"
                             id="originalPaint"
-                            isChecked={formData.originalPaint}
+                            isChecked={editedCarData.originalPaint}
                             onChange={handleInputChange}
                         />
                     </FormControl>
@@ -160,7 +101,7 @@ const InventoryForm = () => {
                             name="accidentsReported"
                             id="accidentsReported"
                             placeholder="Number of Accidents Reported"
-                            value={formData.accidentsReported}
+                            value={editedCarData.accidentsReported}
                             onChange={handleInputChange}
                             required
                         />
@@ -174,7 +115,7 @@ const InventoryForm = () => {
                             name="previousBuyers"
                             id="previousBuyers"
                             placeholder="Number of Previous Buyers"
-                            value={formData.previousBuyers}
+                            value={editedCarData.previousBuyers}
                             onChange={handleInputChange}
                             required
                         />
@@ -188,18 +129,23 @@ const InventoryForm = () => {
                             name="registrationPlace"
                             id="registrationPlace"
                             placeholder="Registration Place"
-                            value={formData.registrationPlace}
+                            value={editedCarData.registrationPlace}
                             onChange={handleInputChange}
                             required
                         />
                     </FormControl>
-                    <Button mt={4} colorScheme="teal" type="submit">
-                        Add Inventory
+                </ModalBody>
+                <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                        Save
                     </Button>
-                </form>
-            </Box>
-        </Center>
+                    <Button colorScheme="red" onClick={onClose}>
+                        Cancel
+                    </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
     );
 };
 
-export default InventoryForm;
+export default EditCarForm;

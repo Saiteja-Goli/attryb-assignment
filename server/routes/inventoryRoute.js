@@ -66,4 +66,43 @@ inventoryRouter.delete("/delete/:id", authentication, async (req, res) => {
   }
 });
 
+//Edit
+inventoryRouter.put("/edit/:id", authentication, async (req, res) => {
+  try {
+    const {
+      carImage,
+      carTitle,
+      kilometersOnOdometer,
+      majorScratches,
+      originalPaint,
+      accidentsReported,
+      previousBuyers,
+      registrationPlace,
+    } = req.body;
+    const updatedCar = await inventoryModel.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
+      {
+        carImage,
+        carTitle,
+        kilometersOnOdometer,
+        majorScratches,
+        originalPaint,
+        accidentsReported,
+        previousBuyers,
+        registrationPlace,
+      },
+      { new: true }
+    );
+
+    if (!updatedCar) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+
+    res.status(200).json(updatedCar);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error updating car" });
+  }
+});
+
 module.exports = inventoryRouter;
