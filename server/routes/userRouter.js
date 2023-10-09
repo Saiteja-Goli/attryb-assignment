@@ -1,5 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 const { userModel } = require("../models/userModel");
 
 const userRoute = express.Router();
@@ -51,7 +54,6 @@ userRoute.post("/login", async (req, res) => {
     if (!email || !password) {
       return res.status(400).json("Improper Login Fields.");
     }
-
     // Checking E-mail
     let user = await userModel.findOne({ email });
 
@@ -64,7 +66,8 @@ userRoute.post("/login", async (req, res) => {
     let passwordCheck = bcrypt.compareSync(password, hash);
 
     if (passwordCheck) {
-      return res.status(200).json({ msg: "Login successful!" });
+      let token = jwt.sign({ user }, process.env.secret, { expiresIn: "3h" });
+      return res.status(200).send( {token} );
     } else {
       return res.status(400).json({ msg: "Invalid password" });
     }

@@ -2,6 +2,10 @@ const express = require("express");
 const cors=require("cors");
 const connection = require("./config/db");
 const userRouter = require("./routes/userRouter");
+const carRouter = require("./routes/carRouteer");
+const oemRouter = require("./routes/oemRouter");
+const inventoryRouter = require("./routes/inventoryRoute");
+const secHandCarRouter = require("./routes/sechandCarsRouter");
 
 require("dotenv").config();
 
@@ -13,6 +17,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
+app.use('/oemspecs',oemRouter)
+app.use('/inventory',inventoryRouter)
+app.use('/sechandcars',secHandCarRouter)
 
 app.listen(process.env.PORT, async () => {
   try {

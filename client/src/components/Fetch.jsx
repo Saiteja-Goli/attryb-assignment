@@ -18,8 +18,8 @@ export async function loginUser(userData) {
         },
         body: JSON.stringify(userData),
     });
-    console.log("response : ",response)
+    console.log("response : ", response)
+    const data1 = await response.json();//Token
     const data = response.status;
-    return data;
+    return { data, data1 };
 }
-

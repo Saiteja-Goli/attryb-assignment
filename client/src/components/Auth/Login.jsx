@@ -13,9 +13,10 @@ import { loginUser } from '../Fetch';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const toast = useToast();
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -27,8 +28,9 @@ const Login = () => {
 
         try {
             const response = await loginUser(formData);
-            console.log(response)
-            if (response === 200) {
+            console.log("response,", response);
+            const token = localStorage.setItem('car-token', JSON.stringify(response.data1.token));
+            if (response.data === 200) {
                 toast({
                     title: 'Login Successful',
                     description: 'Welcome...',
@@ -36,8 +38,9 @@ const Login = () => {
                     duration: 5000,
                     isClosable: true,
                 });
-                navigate("/dashboard")
-            } else if (response === 404) {
+                setIsLoggedIn(true); // Update login status
+                navigate("/dashboard");
+            } else if (response.data === 404) {
                 toast({
                     title: 'User Not Found',
                     description: 'Please Login',
@@ -45,8 +48,7 @@ const Login = () => {
                     duration: 5000,
                     isClosable: true,
                 });
-
-            } else if (response === 400) {
+            } else if (response.data === 400) {
                 toast({
                     title: 'Wrong Credentials',
                     description: 'Please Enter Correct Password',
@@ -54,7 +56,6 @@ const Login = () => {
                     duration: 5000,
                     isClosable: true,
                 });
-
             } else {
                 toast({
                     title: 'An Error Occurred',
@@ -63,7 +64,6 @@ const Login = () => {
                     duration: 5000,
                     isClosable: true,
                 });
-
             }
         } catch (error) {
             console.error('Error during login:', error);
@@ -87,7 +87,7 @@ const Login = () => {
                 width="400px"
             >
                 <Heading as="h2" size="lg" mb={4}>
-                    Login
+                    {isLoggedIn ? 'Logout' : 'Login'} {/* Change text based on login status */}
                 </Heading>
 
                 <form onSubmit={handleSubmit}>
@@ -116,7 +116,7 @@ const Login = () => {
                         />
                     </FormControl>
                     <Button mt={4} colorScheme="teal" type="submit">
-                        Login
+                        {isLoggedIn ? 'Logout' : 'Login'} {/* Change button text based on login status */}
                     </Button>
                 </form>
             </Box>

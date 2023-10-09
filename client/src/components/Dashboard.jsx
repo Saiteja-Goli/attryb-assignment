@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { Box, Button, Select } from '@chakra-ui/react';
 import Carform from './Car/Carform';
 import CarsDetails from './Car/CarsDetails';
+ // Import the MyCars component
+import Mycars from './Car/Mycars';
 
 const Dashboard = () => {
     const [showCarForm, setShowCarForm] = useState(false);
     const [priceSortOrder, setPriceSortOrder] = useState('');
     const [mileageSortOrder, setMileageSortOrder] = useState('');
+    const [showMyCars, setShowMyCars] = useState(false); // State variable for MyCars component
 
     // Adding Car Details
     const handleAddCar = () => {
@@ -22,12 +25,18 @@ const Dashboard = () => {
         console.log('Mileage Sort Order:', mileageSortOrder);
     };
 
+    // Function to show MyCars component
+    const showMyCarsComponent = () => {
+        setShowMyCars(true);
+    };
+
     return (
         <div>
             <Box ml={'82%'} pt={'5%'}>
-                <Button colorScheme={'green'} variant={'solid'} onClick={handleAddCar}>
+                <Button mr="20px" colorScheme={'green'} variant={'solid'} onClick={handleAddCar}>
                     Add Car
                 </Button>
+                <Button colorScheme={"cyan"} onClick={showMyCarsComponent}>My Cars</Button> {/* Show My Cars button */}
             </Box>
             <Box m={4}>
                 <Select
@@ -57,6 +66,8 @@ const Dashboard = () => {
             <Box>
                 {showCarForm ? (
                     <Carform onAddCar={handleCarAdded} />
+                ) : showMyCars ? (
+                    <Mycars /> // Render MyCars component when showMyCars is true
                 ) : (
                     <CarsDetails
                         priceSortOrder={priceSortOrder}

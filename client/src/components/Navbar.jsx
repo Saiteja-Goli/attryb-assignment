@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const Navbar = () => {
   const navbarStyles = {
-    position: 'fixed',
+    position: 'fixed', // Fixed position
     width: '100%', 
     zIndex: 1000, 
     backgroundColor: 'grey',
