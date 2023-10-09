@@ -1,0 +1,26 @@
+{
+  "cars": [
+    {
+      "modelName": "Telsa",
+      "year": "2023",
+      "listPrice": "21",
+      "availableColors": {},
+      "mileage": "11111",
+      "powerBHP": "11111",
+      "maxSpeed": "11111",
+      "imageUrl": "https://media.istockphoto.com/id/1468178137/photo/close-up-side-view-of-an-orange-luxury-sports-car.webp?b=1&s=170667a&w=0&k=20&c=QFTkvPuIY5CEdzIYj3l7Dc9BRyOO2SVLP6rklx1N6PQ=",
+      "id": 1
+    },
+    {
+      "modelName": "Telsa",
+      "year": "2023",
+      "listPrice": "",
+      "availableColors": [],
+      "mileage": "",
+      "powerBHP": "",
+      "maxSpeed": "",
+      "imageUrl": "https://images.pexels.com/photos/1164778/pexels-photo-1164778.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "id": 5
+    }
+  ]
+}

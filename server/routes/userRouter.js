@@ -12,7 +12,7 @@ userRoute.post("/register", async (req, res) => {
 
     // Validation
     if (!name || !email || !password || !number) {
-      return res.status(400).json("Improper Registration Fields"); 
+      return res.status(400).json("Improper Registration Fields");
     }
 
     // Checking Email If Present
@@ -20,7 +20,7 @@ userRoute.post("/register", async (req, res) => {
 
     // If user Exists
     if (user) {
-      return res.status(409).json("User Already Exists"); 
+      return res.status(409).json("User Already Exists");
     }
 
     // Hashing the password
@@ -38,7 +38,7 @@ userRoute.post("/register", async (req, res) => {
     return res.status(201).json("User Registered Successfully");
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error in registration", error }); 
+    return res.status(500).json({ message: "Error in registration", error });
   }
 });
 
@@ -49,14 +49,14 @@ userRoute.post("/login", async (req, res) => {
 
     // Form Validation
     if (!email || !password) {
-      return res.status(400).json("Improper Login Fields."); 
+      return res.status(400).json("Improper Login Fields.");
     }
 
     // Checking E-mail
     let user = await userModel.findOne({ email });
 
     if (!user) {
-      return res.status(404).json("User Not Found"); 
+      return res.status(404).json("User Not Found");
     }
 
     // Checking Password
@@ -64,13 +64,13 @@ userRoute.post("/login", async (req, res) => {
     let passwordCheck = bcrypt.compareSync(password, hash);
 
     if (passwordCheck) {
-      return res.status(200).json({ msg: "Login successful!" }); 
+      return res.status(200).json({ msg: "Login successful!" });
     } else {
-      return res.status(401).json({ msg: "Invalid password" }); 
+      return res.status(400).json({ msg: "Invalid password" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error in login", error }); 
+    return res.status(500).json({ message: "Error in login", error });
   }
 });
 
