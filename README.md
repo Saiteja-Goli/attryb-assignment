@@ -30,4 +30,35 @@ MongoDB is employed as the database to store task data efficiently.
 For any queries and feedback, please contact me at saitejagoli111@gmail.com.
 
 ✨Thank You✨
+<div>
+  <button id="copyButton" onclick="copyCode()">Copy Code</button>
+</div>
+
+<pre>
+  <code>
+    <!-- Your code to be copied here -->
+    console.log("Hello, World!");
+  </code>
+</pre>
+<style>
+  #copyButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+<script>
+  function copyCode() {
+    const codeToCopy = document.querySelector("code");
+    const textArea = document.createElement("textarea");
+    textArea.value = codeToCopy.innerText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    alert("Code copied to clipboard!");
+  }
+</script>
 
