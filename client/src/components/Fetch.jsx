@@ -1,5 +1,5 @@
 export async function registerUser(userData) {
-    const response = await fetch("http://localhost:8000/user/register", {
+    const response = await fetch("https://attryb-backend-saiteja-goli.vercel.app/user/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -11,7 +11,7 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser(userData) {
-    const response = await fetch('http://localhost:8000/user/login', {
+    const response = await fetch('https://attryb-backend-saiteja-goli.vercel.app/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ const Dashboard = () => {
     const fetchHondaCars = async () => {
         const Honda = 'Honda'
         try {
-            const response = await fetch(`http://localhost:8000/inventory/getByTitle/${Honda}`, {
+            const response = await fetch(`https://attryb-backend-saiteja-goli.vercel.app/inventory/getByTitle/${Honda}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

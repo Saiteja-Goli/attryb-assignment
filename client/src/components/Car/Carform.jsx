@@ -35,7 +35,7 @@ const InventoryForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:8000/inventory/post", {
+            const response = await fetch("https://attryb-backend-saiteja-goli.vercel.app/inventory/post", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

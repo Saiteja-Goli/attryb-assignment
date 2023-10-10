@@ -12,7 +12,7 @@ const Mycars = () => {
 
     useEffect(() => {
 
-        fetch("http://localhost:8000/inventory/get", {
+        fetch("https://attryb-backend-saiteja-goli.vercel.app/inventory/get", {
             headers: {
                 "Content-Type": "application/json",
                 "authorization": `Bearer ${token}`
@@ -26,7 +26,7 @@ const Mycars = () => {
     //Delete Operation
     const handleDeleteClick = (carId) => {
         // Performing the deletion action here
-        fetch(`http://localhost:8000/inventory/delete/${carId}`, {
+        fetch(`https://attryb-backend-saiteja-goli.vercel.app/inventory/delete/${carId}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const Mycars = () => {
     };
     const handleEditSave = async (editedCarData) => {
         try {
-            const response = await fetch(`http://localhost:8000/inventory/edit/${editedCarData._id}`, {
+            const response = await fetch(`https://attryb-backend-saiteja-goli.vercel.app/inventory/edit/${editedCarData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

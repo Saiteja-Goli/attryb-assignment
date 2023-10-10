@@ -23,7 +23,7 @@ const CarsDetails = () => {
   const token = localStorage.getItem('car-token');
 
   // useEffect(() => {
-  //   fetch('http://localhost:8000/sechandcars', {
+  //   fetch('https://attryb-backend-saiteja-goli.vercel.app/sechandcars', {
   //     method: 'GET',
   //     headers: {
   //       'Authorization': `Bearer ${token}`,
@@ -37,7 +37,7 @@ const CarsDetails = () => {
   //     .catch((err) => console.log(err));
   // }, []);
   useEffect(() => {
-    fetch(`http://localhost:8000/sechandcars`, {
+    fetch(`https://attryb-backend-saiteja-goli.vercel.app/sechandcars`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -58,7 +58,7 @@ const CarsDetails = () => {
   // Function to handle filter changes and fetch filtered data
   const handleFilterChange = () => {
     let obj = { filterPrice, filterMileage }
-    fetch(`http://localhost:8000/sechandcars/filtercars?listPrice=${filterPrice}&mileage=${filterMileage}`, {
+    fetch(`https://attryb-backend-saiteja-goli.vercel.app/sechandcars/filtercars?listPrice=${filterPrice}&mileage=${filterMileage}`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
