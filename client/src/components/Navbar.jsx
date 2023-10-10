@@ -1,8 +1,9 @@
 import React from 'react';
 import { Box, Flex, Spacer, Link, Text, Button } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate=useNavigate()
   const navbarStyles = {
     position: 'fixed', // Fixed position
     width: '100%', 
@@ -15,7 +16,7 @@ const Navbar = () => {
   return (
     <Box sx={navbarStyles}>
       <Flex align="center" maxW="1200px" mx="auto">
-        <Text fontSize="2xl" fontWeight="bold" color="black">
+        <Text onClick={()=>(navigate("/dashboard"))} fontSize="2xl" fontWeight="bold" color="black">
           My Car Dealership
         </Text>
         <Spacer />

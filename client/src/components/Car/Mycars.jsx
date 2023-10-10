@@ -2,14 +2,16 @@ import { Box, Button, Center, Heading, Image, ListItem, UnorderedList, useToast 
 import React, { useEffect, useState } from 'react'
 import EditCarForm from './EditCarForm'
 
-const token = JSON.parse(localStorage.getItem('car-token'))
 const Mycars = () => {
+    const token = JSON.parse(localStorage.getItem("car-token")) || "";
+    console.log("TOKEN",token)
     const toast = useToast()
     const [myCars, setMyCars] = useState([])
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingCar, setEditingCar] = useState(null);
 
     useEffect(() => {
+
         fetch("http://localhost:8000/inventory/get", {
             headers: {
                 "Content-Type": "application/json",
@@ -21,7 +23,6 @@ const Mycars = () => {
                 setMyCars(data)
             }).catch(err => console.log(err))
     }, [])
-
     //Delete Operation
     const handleDeleteClick = (carId) => {
         // Performing the deletion action here

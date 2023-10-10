@@ -9,7 +9,7 @@ oemRouter.get("/upload", async (req, res) => {
       {
         modelName: "Honda",
         model: "Civic",
-        year: 2022,
+        year: 2015,
         listPrice: 25000,
         availableColors: ["Red", "Blue", "Black", "White"],
         mileage: 30, // MPG

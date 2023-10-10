@@ -66,7 +66,7 @@ userRoute.post("/login", async (req, res) => {
     let passwordCheck = bcrypt.compareSync(password, hash);
 
     if (passwordCheck) {
-      let token = jwt.sign({ user }, process.env.secret, { expiresIn: "3h" });
+      let token = jwt.sign({ user }, process.env.secret);
       return res.status(200).send( {token} );
     } else {
       return res.status(400).json({ msg: "Invalid password" });

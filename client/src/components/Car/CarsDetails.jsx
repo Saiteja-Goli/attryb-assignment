@@ -8,6 +8,7 @@ import {
   Button,
   useToast,
   Center,
+  Select,
   Text,
 } from '@chakra-ui/react';
 
@@ -15,10 +16,28 @@ const CarsDetails = () => {
   const toast = useToast();
   const [carDetails, setCarDetails] = useState([]);
 
+  const [filterPrice, setFilterPrice] = useState('');
+  const [filterColor, setFilterColor] = useState(''); // State for Color filter
+  const [filterMileage, setFilterMileage] = useState('');
+
   const token = localStorage.getItem('car-token');
-  console.log("Token: ", token)
+
+  // useEffect(() => {
+  //   fetch('http://localhost:8000/sechandcars', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Authorization': `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setCarDetails(data);
+  //       console.log(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
   useEffect(() => {
-    fetch('http://localhost:8000/sechandcars', {
+    fetch(`http://localhost:8000/sechandcars`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -30,15 +49,58 @@ const CarsDetails = () => {
         console.log(data);
       })
       .catch((err) => console.log(err));
-  }, []);
-
+  }, [filterMileage, filterPrice]);
   const getRandomColor = (availableColors) => {
     const randomIndex = Math.floor(Math.random() * availableColors.length);
     return availableColors[randomIndex];
   };
 
+  // Function to handle filter changes and fetch filtered data
+  const handleFilterChange = () => {
+    let obj = { filterPrice, filterMileage }
+    fetch(`http://localhost:8000/sechandcars/filtercars?listPrice=${filterPrice}&mileage=${filterMileage}`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(obj)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCarDetails(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+
   return (
     <div>
+
+
+      <Select
+        value={filterPrice}
+        onChange={(e) => setFilterPrice(e.target.value)}
+        placeholder="Filter by Price"
+      >
+        <option value="">All Prices</option>
+        <option value="asc">Price: Low to High</option>
+        <option value="desc">Price: High to Low</option>
+      </Select>
+
+      {/* Mileage Filter */}
+      <Select
+        value={filterMileage}
+        onChange={(e) => setFilterMileage(e.target.value)}
+        placeholder="Filter by Mileage"
+      >
+        <option value="">All Mileages</option>
+        <option value="asc">Mileage: Low to High</option>
+        <option value="desc">Mileage: High to Low</option>
+      </Select>
+      <Button onClick={handleFilterChange}>ApplyFilters</Button>
+
       <Box display={'grid'} gridTemplateColumns=' 1fr 1fr'>
         {carDetails.length > 0 ?
           carDetails.map((car, index) => (
@@ -67,13 +129,12 @@ const CarsDetails = () => {
                   <hr></hr>
                   <UnorderedList fontFamily={'mono'}>
                     <ListItem>
-                      <strong>Mileage:</strong> {car.oemData.mileage}
+                      <strong>Mileage:</strong> {car.oemData.mileage} Miles                    </ListItem>
+                    <ListItem>
+                      <strong>Power (BHP):</strong> {car.oemData.powerBHP} MPG
                     </ListItem>
                     <ListItem>
-                      <strong>Power (BHP):</strong> {car.oemData.powerBHP}
-                    </ListItem>
-                    <ListItem>
-                      <strong>Max Speed:</strong> {car.oemData.maxSpeed}
+                      <strong>Max Speed:</strong> {car.oemData.maxSpeed} MPH
                     </ListItem>
                     <ListItem>
                       <strong>Price:</strong> {car.oemData.listPrice}

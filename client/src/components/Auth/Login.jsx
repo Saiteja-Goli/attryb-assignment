@@ -30,6 +30,11 @@ const Login = () => {
             const response = await loginUser(formData);
             console.log("response,", response);
             const token = localStorage.setItem('car-token', JSON.stringify(response.data1.token));
+            if (response.ok) {
+                const data = await response.json();
+                const token = data.token; // Replace this with the actual key in your response
+                localStorage.setItem("car-token", JSON.stringify(token));
+              }
             if (response.data === 200) {
                 toast({
                     title: 'Login Successful',
@@ -43,7 +48,7 @@ const Login = () => {
             } else if (response.data === 404) {
                 toast({
                     title: 'User Not Found',
-                    description: 'Please Login',
+                    description: 'Please SignUp',
                     status: 'warning',
                     duration: 5000,
                     isClosable: true,
@@ -116,7 +121,7 @@ const Login = () => {
                         />
                     </FormControl>
                     <Button mt={4} colorScheme="teal" type="submit">
-                        {isLoggedIn ? 'Logout' : 'Login'} {/* Change button text based on login status */}
+                        {isLoggedIn ? 'Logout' : 'Login'} 
                     </Button>
                 </form>
             </Box>

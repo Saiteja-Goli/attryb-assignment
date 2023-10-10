@@ -47,6 +47,19 @@ inventoryRouter.get("/get", authentication, async (req, res) => {
   }
 });
 
+//GET Honda
+inventoryRouter.get("/getByTitle/:title", authentication, async (req, res) => {
+  try {
+    const title = req.params.title;
+    const hondaCars = await inventoryModel.find({
+      carTitle: title, // Filter by car title
+    });
+    res.status(200).json(hondaCars);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error retrieving Honda cars" });
+  }
+});
 //Delete Route
 inventoryRouter.delete("/delete/:id", authentication, async (req, res) => {
   try {
@@ -66,7 +79,7 @@ inventoryRouter.delete("/delete/:id", authentication, async (req, res) => {
   }
 });
 
-//Edit
+//Edit Route
 inventoryRouter.put("/edit/:id", authentication, async (req, res) => {
   try {
     const {

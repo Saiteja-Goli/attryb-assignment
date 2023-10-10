@@ -9,9 +9,9 @@ secHandCarRouter.get("/", async (req, res) => {
     const secHandCars = await inventoryModel.aggregate([
       {
         $lookup: {
-          from: "oem_specs", 
-          localField: "carTitle", 
-          foreignField: "modelName", 
+          from: "oem_specs",
+          localField: "carTitle",
+          foreignField: "modelName",
           as: "oemData",
         },
       },
@@ -29,4 +29,28 @@ secHandCarRouter.get("/", async (req, res) => {
   }
 });
 
+secHandCarRouter.post("/filtercars", async (req, res) => {
+  const { filterPrice, filterMileage } = req.body; // Get filter criteria from the request body
+  console.log(filterPrice, filterMileage)
+  const data = await inventoryModel.find();
+  // Perform filtering based on criteria
+  const filteredCars = data.filter((car) => {
+    if (
+      (filterPrice === "asc" && car.oemData.listPrice < 50000) || // Replace with your price filtering condition
+      (filterPrice === "desc" && car.oemData.listPrice >= 50000) // Replace with your price filtering condition
+    ) {
+      return false;
+    }
+    if (
+      (filterMileage === "asc" && car.oemData.mileage >= 100000) || // Replace with your filterMileage filtering condition
+      (filterMileage === "desc" && car.oemData.mileage < 100000) // Replace with your mileage filtering condition
+    ) {
+      return false;
+    }
+    return true;
+  });
+
+  // Send the filtered cars as a response
+  res.json(filteredCars);
+});
 module.exports = secHandCarRouter;

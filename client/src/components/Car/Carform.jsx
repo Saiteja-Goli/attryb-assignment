@@ -43,11 +43,9 @@ const InventoryForm = () => {
                 },
                 body: JSON.stringify(formData),
             });
-
             if (response.ok) {
                 const responseData = await response.json();
                 console.log(responseData);
-
                 toast({
                     title: "Inventory Added Successfully",
                     description: "Inventory data has been added.",
@@ -66,10 +64,11 @@ const InventoryForm = () => {
                     registrationPlace: "",
                 });
                 window.location.reload();
+            }else if(response.status==401){
                 toast({
-                    title: "Inventory Added Successfully",
-                    description: "Inventory data has been added.",
-                    status: "success",
+                    title: "Not Authorised",
+                    description: "Please Login",
+                    status: "warning",
                     duration: 5000,
                     isClosable: true,
                 });
@@ -88,10 +87,14 @@ const InventoryForm = () => {
 
     return (
         <Center h="100vh">
+
             <Box p={4} borderWidth="1px" borderRadius="lg" shadow="lg" width="400px">
-                <Heading as="h2" size="lg" mb={4}>
+                <Heading as="h2" size="lg" mb={4} back>
                     Add Inventory Data
                 </Heading>
+                <Box style={{ marginBottom: "1rem", fontFamily: "-moz-initial", backgroundColor: "lightblue", padding: "5px", borderRadius: "15px" }}>
+                    Please fill 'carTitle' as Honda, Toyota, Ford, Chevrolet, BMW, Audi, Mercedes-Benz, Nissan, Hyundai, Volkswagen.
+                </Box>
                 <form onSubmit={handleSubmit}>
                     <FormControl>
                         <FormLabel htmlFor="carImage">
