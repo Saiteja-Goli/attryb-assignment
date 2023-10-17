@@ -6,7 +6,7 @@ Explore a trusted online marketplace for buying and selling second-hand cars. Fi
 
 ## Deployed Link
 
-- [Live Demo](#) - https://client-saiteja-goli.vercel.app
+- [Live Demo](#) - https://client-saiteja-goli.vercel.app/
 
 ## Backend Deploy
 

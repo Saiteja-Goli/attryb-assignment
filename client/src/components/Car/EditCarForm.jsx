@@ -14,6 +14,7 @@ const EditCarForm = ({ carData, isOpen, onClose, onSave }) => {
             [name]: value,
         });
     };
+    
     const token = localStorage.getItem('car-token');
 
     const handleSubmit = async () => {
