@@ -6,11 +6,11 @@ Explore a trusted online marketplace for buying and selling second-hand cars. Fi
 
 ## Deployed Link
 
-- [Live Demo](#) - https://client-saiteja-goli.vercel.app/
+- [Live Demo](https://attryb-assignment-two.vercel.app/)
 
 ## Backend Deploy
 
-- [Live Demo](#) - https://attryb-backend-saiteja-goli.vercel.app
+- [Live Demo](https://attryb-backend-saiteja-goli.vercel.app)
 
 ## .env
 
@@ -41,6 +41,7 @@ git clone https://github.com/Saiteja-Goli/attryb-assignment
 
 - The API gracefully handles potential errors, providing clear HTTP status codes and descriptive error messages.
 - Users receive clear feedback in the event of errors during API interactions.
+
 ### Middleware
 
 - Middleware is used to log API requests, capturing essential details about incoming requests and responses.
